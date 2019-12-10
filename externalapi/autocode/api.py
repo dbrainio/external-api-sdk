@@ -86,7 +86,7 @@ async def get_vehicle_info(vin: str):
         if response['state'] == 'ok':
             report = await _get_report(session, response['data'][0]['uid'])
         else:
-            raise ValueError(response['event']['name'])
+            report = None
     if report is not None:
         data = _parse_response(report)
     else:
