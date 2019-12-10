@@ -77,7 +77,7 @@ def _parse_response(payload: dict) -> dict:
     return result
 
 
-async def get_vehicle_info(vin: str):
+async def get_vehicle_info(vin: str) -> Optional[dict]:
     """Get vehicle info by VIN."""
     async with ClientSession(
             headers={'Authorization': __config['token'], 'Content-Type': 'application/json'},
@@ -94,7 +94,8 @@ async def get_vehicle_info(vin: str):
     return data
 
 
-def get_vehicle_info_sync(vin: str):
+def get_vehicle_info_sync(vin: str) -> Optional[dict:
+    """Just the sync wrapper."""
     loop = asyncio.get_event_loop()
     task = asyncio.ensure_future(get_vehicle_info(vin))
     loop.run_until_complete(task)
