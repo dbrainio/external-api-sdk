@@ -12,6 +12,7 @@ CONFIG = {
     'author': 's00ler',
     'install_requires': install_requires,
     'packages': find_packages(),
+    'include_package_data': True
 }
 
 setup(**CONFIG)
