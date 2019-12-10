@@ -77,7 +77,7 @@ def _parse_response(payload: dict) -> dict:
     return result
 
 
-async def get_vehicle_info(vin: str) -> Optional[dict]:
+async def get_vehicle_info_async(vin: str) -> Optional[dict]:
     """Get vehicle info by VIN."""
     async with ClientSession(
             headers={'Authorization': __config['token'], 'Content-Type': 'application/json'},
