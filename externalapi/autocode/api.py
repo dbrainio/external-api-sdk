@@ -6,7 +6,7 @@ from aiohttp import ClientSession, TCPConnector
 
 from typing import Optional
 
-__config_path = Path(__file__).absolute().parent.parent.parent / 'configs' / 'autocode.json'
+__config_path = Path(__file__).absolute().parent.parent / 'configs' / 'autocode.json'
 __config = json.load(__config_path.open())
 
 
