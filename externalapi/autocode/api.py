@@ -94,10 +94,8 @@ async def get_vehicle_info_async(vin: str) -> Optional[dict]:
     return data
 
 
-def get_vehicle_info_sync(vin: str) -> Optional[dict:
+def get_vehicle_info_sync(vin: str) -> Optional[dict]:
     """Just the sync wrapper."""
     loop = asyncio.get_event_loop()
-    task = asyncio.ensure_future(get_vehicle_info(vin))
-    loop.run_until_complete(task)
-    result = task.result()
+    result = loop.run_until_complete(get_vehicle_info_async(vin))
     return result
