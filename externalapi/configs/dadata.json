@@ -1,7 +1,7 @@
 {
   "gateway":{
-    "suggest": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/",
-    "cleaner": "https://cleaner.dadata.ru/api/v1/clean/"
+    "suggest": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/{method}/{resource}",
+    "cleaner": "https://cleaner.dadata.ru/api/v1/clean/{resource}"
   },
   "token": "5a1cc7b203efec4e5da1c1ccc6014bb6ee9aa966"
 }
