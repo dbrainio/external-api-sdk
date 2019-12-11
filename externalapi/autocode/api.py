@@ -1,4 +1,3 @@
-import json
 import asyncio
 
 from typing import Optional, Dict, Any
@@ -42,14 +41,12 @@ class Autocode(APIConnector):
             'queryType': 'VIN',
             'query': vin
         }
-        async with self._session.post(url, data=json.dumps(payload)) as response:
-            data = await response.json()
+        data = await self._request(url, 'POST', payload)
         return data
 
     async def _get_report(self, report_id: str) -> Optional[dict]:
         url = self._gateway + f'/user/reports/{report_id}?_content=true&_detailed=true'
-        async with self.session.get(url) as response:
-            data = await response.json()
+        data = await self._request(url, 'GET')
 
         if data['state'] == 'ok' and data['size'] > 0:
             if data['data'][0]['progress_wait'] != 0:

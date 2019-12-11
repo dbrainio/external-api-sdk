@@ -1,7 +1,15 @@
+import json
+
 from aiohttp import ClientSession, TCPConnector
 
 from types import TracebackType
 from typing import Optional, Type
+
+
+class APIConnectorException(Exception):
+    def __init__(self, status: int, payload: dict):
+        self.status = status
+        self.payload = payload
 
 
 class APIConnector:
@@ -25,6 +33,13 @@ class APIConnector:
         session = self.session
         if session is not None:
             await session.close()
+
+    async def _request(self, url: str, method: str, data: Optional[dict] = None) -> dict:
+        async with self.session.request(method, url, data=json.dumps(data)) as response:
+            result = await response.json()
+            if response.status != 200:
+                raise APIConnectorException(response.status, result)
+            return result
 
     async def __aenter__(self):
         """Enable async context manager use of APIConnector."""
