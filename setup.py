@@ -3,6 +3,7 @@ from setuptools import setup, find_packages
 
 install_requires = [
     'aiohttp==3.6.2',
+    'zeep==3.4.0'
 ]
 
 CONFIG = {
