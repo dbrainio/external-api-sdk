@@ -8,11 +8,10 @@ install_requires = [
 CONFIG = {
     'name': 'external-api-sdk',
     'url': 'https://github.com/dbrainio/external-api-sdk',
-    'version': '0.1.0',
+    'version': '0.2.0',
     'author': 's00ler',
     'install_requires': install_requires,
-    'packages': find_packages(),
-    'include_package_data': True
+    'packages': find_packages()
 }
 
 setup(**CONFIG)

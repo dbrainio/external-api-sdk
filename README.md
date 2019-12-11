@@ -11,9 +11,19 @@ SDK to enable usage of the Autocode/Dadata/etc APIs inside Docr
 ### Autocode
 
 ```python
-from externalapi import autocode
-res = autocode.get_vehicle_info_sync('VIN_NUMBER')
-res = await autocode.get_vehicle_info_async('VIN_NUMBER')
+from externalapi import Autocode
+
+api = Autocode('SECRET KEY')
+res = await api.get_vehicle_info('VIN_NUMBER')
+await api.close()
+# or
+async with Autocode('SECRET KEY') as api:
+  res = await api.get_vehicle_info('VIN_NUMBER')
+
+# if async/await is not an option use run_sync:
+from externalapi.utils import run_sync
+
+res = run_sync(api.get_vehicle_info('VIN_NUMBER'))
 ```
 
 Output: `None` or
@@ -49,7 +59,6 @@ Output: `None` or
   },
   "category": "B"
 }
-
 ```
 
 ### Dadata
