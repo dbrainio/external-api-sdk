@@ -3,16 +3,16 @@ from setuptools import setup, find_packages
 
 install_requires = [
     'aiohttp==3.6.2',
+    'zeep==3.4.0'
 ]
 
 CONFIG = {
     'name': 'external-api-sdk',
     'url': 'https://github.com/dbrainio/external-api-sdk',
-    'version': '0.1.0',
+    'version': '0.2.0',
     'author': 's00ler',
     'install_requires': install_requires,
-    'packages': find_packages(),
-    'include_package_data': True
+    'packages': find_packages()
 }
 
 setup(**CONFIG)
