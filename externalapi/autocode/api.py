@@ -7,11 +7,10 @@ from externalapi.utils.APIConnector import APIConnector
 
 class Autocode(APIConnector):
     _gateway = 'https://b2b-api.checkperson.ru/b2b/api/v1'
-    _report_name = 'report_individual_test@dbrain'
 
-    def __init__(self, secret: str, gateway: Optional[str] = None, report_name: Optional[str] = None):
+    def __init__(self, secret: str, report_name: str, gateway: Optional[str] = None):
         self._gateway = self._gateway if gateway is None else gateway
-        self._report_name = self._report_name if report_name is None else report_name
+        self._report_name = report_name
         self._secret = secret
         self._session_headers = {
             'Authorization': self._secret,
