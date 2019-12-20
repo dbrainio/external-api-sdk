@@ -47,6 +47,8 @@ res = run_sync(api.get_vehicle_info("VIN_NUMBER"))
     "owner": "PERSON",
     "date_from": "2016-03-30 00:00:00"
   },
+  "brand_model_rus": "ФОРД ФОКУС",
+  "type": "Комби (хэтчбек)",
   "brand": "Ford",
   "model": "Focus",
   "year": 2015,
