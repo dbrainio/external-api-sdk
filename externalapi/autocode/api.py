@@ -79,6 +79,8 @@ class Autocode(APIConnector):
 
         tech_data = payload.get('tech_data')
         if tech_data:
+            result['brand_model_rus'] = tech_data['brand']['name']['original']
+            result['type'] = tech_data['type']['name']
             result['brand'] = tech_data['brand']['name']['normalized']
             result['model'] = tech_data['model']['name']['normalized']
             result['year'] = tech_data['year']
