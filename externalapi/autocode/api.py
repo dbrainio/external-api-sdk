@@ -21,7 +21,7 @@ class Autocode(APIConnector):
     def _get_if_exists(data: dict, keys_chain: Iterable[str]) -> Optional[Any]:
         cur_val = data
         for key in keys_chain:
-            res = cur_val.get(key)
+            res = cur_val.get(key, '')
             if res:
                 cur_val = res
         return res
@@ -73,10 +73,10 @@ class Autocode(APIConnector):
         if identifiers:
             vehicle = identifiers.get('vehicle')
             if vehicle:
-                result['vin'] = vehicle.get('vin')
-                result['reg_num'] = vehicle.get('reg_num')
-                result['sts'] = vehicle.get('sts')
-                result['pts'] = vehicle.get('pts')
+                result['vin'] = vehicle.get('vin', '')
+                result['reg_num'] = vehicle.get('reg_num', '')
+                result['sts'] = vehicle.get('sts', '')
+                result['pts'] = vehicle.get('pts', '')
 
         reg_acts = payload.get('registration_actions')
         if reg_acts:
@@ -91,7 +91,7 @@ class Autocode(APIConnector):
         tech_data = payload.get('tech_data')
         if tech_data:
 
-            result['year'] = tech_data.get('year')
+            result['year'] = tech_data.get('year', '')
             result['weight'] = {
                 'netto': Autocode._get_if_exists(tech_data, ('weight', 'netto')),
                 'max': Autocode._get_if_exists(tech_data, ('weight', 'max'))
@@ -105,7 +105,7 @@ class Autocode(APIConnector):
         engine = tech_data.get('engine')
         if engine:
             result['engine'] = {
-                'volume': engine.get('volume'),
+                'volume': engine.get('volume', ''),
                 'power': {
                     'hp': Autocode._get_if_exists(engine, ('power', 'hp')),
                     'kw': Autocode._get_if_exists(engine, ('power', 'kw'))
