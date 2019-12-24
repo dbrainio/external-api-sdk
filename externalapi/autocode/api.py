@@ -78,6 +78,7 @@ class Autocode(APIConnector):
             if data['state'] == 'ok' and data['size'] > 0:
                 if data['data'][0]['progress_wait'] != 0:
                     await asyncio.sleep(2)
+                    retries -= 1
                 else:
                     result = data['data'][0]['content']
                     break
