@@ -71,16 +71,18 @@ class Autocode(APIConnector):
 
     async def _get_report(self, report_id: str) -> Optional[dict]:
         url = self._gateway + f'/user/reports/{report_id}?_content=true&_detailed=true'
-        data = await self._request(url, 'GET')
-
-        if data['state'] == 'ok' and data['size'] > 0:
-            if data['data'][0]['progress_wait'] != 0:
-                await asyncio.sleep(0.1)
-                result = await self._get_report(report_id)
+        retries = 10
+        result = None
+        while retries >= 0:
+            data = await self._request(url, 'GET')
+            if data['state'] == 'ok' and data['size'] > 0:
+                if data['data'][0]['progress_wait'] != 0:
+                    await asyncio.sleep(2)
+                else:
+                    result = data['data'][0]['content']
+                    break
             else:
-                result = data['data'][0]['content']
-        else:
-            result = None
+                break
         return result
 
     @staticmethod

@@ -4,7 +4,7 @@ SDK to enable usage of the Autocode/Dadata/etc APIs inside Docr
 
 ## Installation
 
-`pip install git+https://github.com/dbrainio/external-api-sdk/archive/v0.2.5.zip`
+`pip install git+https://github.com/dbrainio/external-api-sdk/archive/v0.2.6.zip`
 
 ## Usage
 
