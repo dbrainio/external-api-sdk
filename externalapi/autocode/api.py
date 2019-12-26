@@ -1,5 +1,5 @@
 import asyncio
-
+from functools import partial
 from typing import Optional, Dict, Any, Iterable
 
 from externalapi.utils.APIConnector import APIConnector
@@ -88,44 +88,50 @@ class Autocode(APIConnector):
 
     @staticmethod
     def _parse_response(payload: dict) -> dict:
+        _get = partial(Autocode._get_if_exists, payload)
+
         result = {}
-        result['vin'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'vin'))
-        result['reg_num'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'reg_num'))
-        result['sts'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'sts'))
-        result['pts'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'pts'))
-        result['body'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'body'))
-        result['chassis'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'chassis'))
+        result['vin'] = _get(('identifiers', 'vehicle', 'vin'))
+        result['reg_num'] = _get(('identifiers', 'vehicle', 'reg_num'))
+        result['sts'] = _get(('identifiers', 'vehicle', 'sts'))
+        result['pts'] = _get(('identifiers', 'vehicle', 'pts'))
+        result['body'] = _get(('identifiers', 'vehicle', 'body'))
+        result['chassis'] = _get(('identifiers', 'vehicle', 'chassis'))
 
         result['last_registered'] = {
-            'region': Autocode._get_if_exists(payload, ('registration_actions', 'items', -1, 'geo', 'region')),
-            'city': Autocode._get_if_exists(payload, ('registration_actions', 'items', -1, 'geo', 'city')),
-            'owner': Autocode._get_if_exists(payload, ('registration_actions', 'items', -1, 'owner', 'type')),
-            'date_from': Autocode._get_if_exists(payload, ('registration_actions', 'items', -1, 'date', 'start'))
+            'region': _get(('registration_actions', 'items', -1, 'geo', 'region')),
+            'city': _get(('registration_actions', 'items', -1, 'geo', 'city')),
+            'owner': _get(('registration_actions', 'items', -1, 'owner', 'type')),
+            'date_from': _get(('registration_actions', 'items', -1, 'date', 'start'))
         }
 
-        result['year'] = Autocode._get_if_exists(payload, ('tech_data', 'year'))
+        result['year'] = _get(('tech_data', 'year'))
         result['weight'] = {
-            'netto': Autocode._get_if_exists(payload, ('tech_data', 'weight', 'netto')),
-            'max': Autocode._get_if_exists(payload, ('tech_data', 'weight', 'max'))
+            'netto': _get(('tech_data', 'weight', 'netto')),
+            'max': _get(('tech_data', 'weight', 'max'))
         }
-        result['brand_model_rus'] = Autocode._get_if_exists(payload, ('tech_data', 'brand', 'name', 'original'))
-        result['type'] = Autocode._get_if_exists(payload, ('tech_data', 'type', 'name'))
-        result['brand'] = Autocode._get_if_exists(payload, ('tech_data', 'brand', 'name', 'normalized'))
-        result['model'] = Autocode._get_if_exists(payload, ('tech_data', 'model', 'name', 'normalized'))
-        result['color'] = Autocode._get_if_exists(payload, ('tech_data', 'body', 'color', 'name'))
-        result['drive'] = Autocode._get_if_exists(payload, ('tech_data', 'drive', 'type'))
+        result['brand_model_rus'] = _get(('tech_data', 'brand', 'name', 'original'))
+        result['type'] = _get(('tech_data', 'type', 'name'))
+        result['brand'] = _get(('tech_data', 'brand', 'name', 'normalized'))
+        result['model'] = _get(('tech_data', 'model', 'name', 'normalized'))
+        result['color'] = _get(('tech_data', 'body', 'color', 'name'))
+        result['drive'] = _get(('tech_data', 'drive', 'type'))
 
         result['engine'] = {
-            'volume': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'volume')),
+            'volume': _get(('tech_data', 'engine', 'volume')),
             'power': {
-                'hp': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'power', 'hp')),
-                'kw': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'power', 'kw'))
+                'hp': _get(('tech_data', 'engine', 'power', 'hp')),
+                'kw': _get(('tech_data', 'engine', 'power', 'kw'))
             },
-            'fuel': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'fuel', 'type')),
-            'model': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'model', 'name')),
-            'number': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'number'))
+            'fuel': _get(('tech_data', 'engine', 'fuel', 'type')),
+            'model': _get(('tech_data', 'engine', 'model', 'name')),
+            'number': _get(('tech_data', 'engine', 'number'))
         }
 
-        result['category'] = Autocode._get_if_exists(payload, ('additional_info', 'vehicle', 'category', 'code'))
-
+        result['category'] = _get(('additional_info', 'vehicle', 'category', 'code'))
+        result['owner'] = {
+            'region': _get(('additional_info', 'vehicle', 'owner', 'geo', 'region')),
+            'city': _get(('additional_info', 'vehicle', 'owner', 'geo', 'city')),
+            'postal_code': _get(('additional_info', 'vehicle', 'owner', 'geo', 'postal_code')),
+        }
         return result
