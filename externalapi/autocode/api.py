@@ -93,6 +93,8 @@ class Autocode(APIConnector):
         result['reg_num'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'reg_num'))
         result['sts'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'sts'))
         result['pts'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'pts'))
+        result['body'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'body'))
+        result['chassis'] = Autocode._get_if_exists(payload, ('identifiers', 'vehicle', 'chassis'))
 
         result['last_registered'] = {
             'region': Autocode._get_if_exists(payload, ('registration_actions', 'items', -1, 'geo', 'region')),
@@ -111,6 +113,7 @@ class Autocode(APIConnector):
         result['brand'] = Autocode._get_if_exists(payload, ('tech_data', 'brand', 'name', 'normalized'))
         result['model'] = Autocode._get_if_exists(payload, ('tech_data', 'model', 'name', 'normalized'))
         result['color'] = Autocode._get_if_exists(payload, ('tech_data', 'body', 'color', 'name'))
+        result['drive'] = Autocode._get_if_exists(payload, ('tech_data', 'drive', 'type'))
 
         result['engine'] = {
             'volume': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'volume')),
@@ -119,7 +122,8 @@ class Autocode(APIConnector):
                 'kw': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'power', 'kw'))
             },
             'fuel': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'fuel', 'type')),
-            'model': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'model', 'name'))
+            'model': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'model', 'name')),
+            'number': Autocode._get_if_exists(payload, ('tech_data', 'engine', 'number'))
         }
 
         result['category'] = Autocode._get_if_exists(payload, ('additional_info', 'vehicle', 'category', 'code'))
