@@ -3,7 +3,7 @@ import json
 from aiohttp import ClientSession, TCPConnector
 
 from types import TracebackType
-from typing import Optional, Type
+from typing import Optional, Type, Any, Iterable
 
 
 class APIConnectorException(Exception):
@@ -27,6 +27,20 @@ class APIConnector:
                 connector=TCPConnector(verify_ssl=False)
             )
         return self._session
+
+    @staticmethod
+    def _get_if_exists(data: dict, keys_chain: Iterable[str]) -> Optional[Any]:
+        cur_val = data
+        for key in keys_chain:
+            if isinstance(cur_val, list):
+                try:
+                    res = cur_val[key]
+                except IndexError:
+                    res = ''
+            else:
+                res = cur_val.get(key, '')
+            cur_val = res if res else {}
+        return res
 
     async def close(self) -> None:
         """Do not forget to close session if methods with arg auto_close_session equal to False called."""

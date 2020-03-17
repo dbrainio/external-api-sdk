@@ -1,6 +1,6 @@
 import asyncio
 from functools import partial
-from typing import Optional, Dict, Any, Iterable
+from typing import Optional, Dict, Any
 
 from externalapi.utils.APIConnector import APIConnector
 
@@ -16,20 +16,6 @@ class Autocode(APIConnector):
             'Authorization': self._secret,
             'Content-Type': 'application/json'
         }
-
-    @staticmethod
-    def _get_if_exists(data: dict, keys_chain: Iterable[str]) -> Optional[Any]:
-        cur_val = data
-        for key in keys_chain:
-            if isinstance(cur_val, list):
-                try:
-                    res = cur_val[key]
-                except IndexError:
-                    res = ''
-            else:
-                res = cur_val.get(key, '')
-            cur_val = res if res else {}
-        return res
 
     async def get_vehicle_info_by_vin(self, vin: str, auto_close_session: bool = False) -> Optional[dict]:
         return await self.get_vehicle_info('VIN', vin, auto_close_session)
