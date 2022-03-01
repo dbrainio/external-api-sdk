@@ -6,7 +6,7 @@ from externalapi.utils.APIConnector import APIConnector
 
 
 class Autocode(APIConnector):
-    _gateway = 'https://b2b-api.checkperson.ru/b2b/api/v1'
+    _gateway = 'https://b2bapi.avtocod.ru/b2b/api/v1'
 
     def __init__(self, secret: str, report_name: str, gateway: Optional[str] = None):
         self._gateway = self._gateway if gateway is None else gateway
