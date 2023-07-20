@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 install_requires = [
-    'aiohttp==3.6.2',
+    'aiohttp==3.8.5',
     'zeep==3.4.0'
 ]
 
